@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity{
 
-        private int count = 60;
+        private int count = 1500;
         private int MILLISINFUTURE = count *1000;
         private static final int COUNT_DOWN_INTERVAL = 1000;
         private boolean status = true;  // true -> start false -> stop
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
         else if(second < 10)
             return minute+":"+"0"+second;
 
-        else 
+        else
             return minute + ":" + second;
     }
 }
