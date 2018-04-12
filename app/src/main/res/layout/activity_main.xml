@@ -31,7 +31,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="100sp"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="sans-serif-thin"
         app:layout_constraintBottom_toTopOf="@+id/controllButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.518"
