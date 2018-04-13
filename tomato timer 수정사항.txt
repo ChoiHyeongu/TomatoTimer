@@ -1,2 +1,0 @@
-timeView에 테두리
-start와 round today round사이 vertical bar
