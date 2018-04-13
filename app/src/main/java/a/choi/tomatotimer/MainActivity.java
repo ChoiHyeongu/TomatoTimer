@@ -12,66 +12,60 @@ import org.w3c.dom.Text;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity{
 
-        private int count = 1500;
-        private int MILLISINFUTURE = (count+1) *1000;
-        private static final int COUNT_DOWN_INTERVAL = 1000;
-        private boolean status = false;
-        private CountDownTimer countDownTimer;
-        private int second, minute;
+    private static final int MILLISINFUTURE = 1500*1000;
+    private static final int COUNT_DOWN_INTERVAL = 1000;
+
+    private int count = 1500, minute, second;
+    private CountDownTimer countDownTimer;
+    private TextView timeview;
+    private boolean status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        timeview = (TextView)findViewById(R.id.timeView);
+
         final Button controll = (Button) findViewById(R.id.controllButton);
-
-        controll.setOnClickListener(new Button.OnClickListener() {
+        controll.setOnClickListener(new Button.OnClickListener(){
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view){
                 if(status == true) {
-                    countDownTimer();
-                    cancle();
-                    controll.setBackgroundResource(R.drawable.play);
-                    status = !status;
-                }
-                else if(status == false){
                     countDownTimer();
                     countDownTimer.start();
                     controll.setBackgroundResource(R.drawable.stop);
-                    status = !status;
+                    status = false;
+                }
+                else{
+                    countDownTimer.onFinish();
+                    controll.setBackgroundResource(R.drawable.play);
+                    status = true;
                 }
             }
         });
     }
 
-    public void countDownTimer() {
+    public void countDownTimer(){
 
-        countDownTimer = new CountDownTimer(MILLISINFUTURE, COUNT_DOWN_INTERVAL) {
-            private final TextView timeView = (TextView) findViewById(R.id.timeView);
+        countDownTimer = new CountDownTimer(MILLISINFUTURE,COUNT_DOWN_INTERVAL){
 
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeView.setText(""+millisUntilFinished/1000);
-            }
-
-            public void onFinish() {
-                count = 1500;
-                timeView.setText(timeText(count));
-                countDownTimer = null;
-            }
+          @Override
+          public void onTick(long millisUntilFinished){
+                timeview.setText(timeText(count));
+                count--;
+          }
+          @Override
+          public void onFinish(){
+              countDownTimer.cancel();
+              count = 1500;
+              timeview.setText("25:00");
+          }
         };
-    }
-
-    private void cancle(){
-        if(countDownTimer != null){
-            countDownTimer.cancel();
-            countDownTimer = null;
-        }
     }
 
     public String timeText(int count){
